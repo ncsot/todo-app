@@ -1,12 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TodoList from './todo-list';
-import ToolsCard from './todo-card-tools-sort';
+import ToolsSort from './todo-card-tools-sort';
 import { Card, CardContent, CardHeader } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import moment from 'moment';
 import Input from '@material-ui/core/Input';
-import TodoCardAddItem from './todo-card-add-item';
+import ToolsAddItem from './todo-card-tools-addItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,11 +53,11 @@ const TodoCard = ({ tododata, onDeleted, onAdded }) => {
           }
           subheader={date}
         />
-        <ToolsCard />
+        <ToolsSort />
         <CardContent>
           <TodoList todos={todos} onDeleted={onDeleted}/>
         </CardContent>
-        
+        <ToolsAddItem />
       </Card>
     </Grid>
   );
