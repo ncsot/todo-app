@@ -8,35 +8,28 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 
 export default class TodoListItem extends Component {
-  state = {
-    isDone: false,
-    isImportant: false,
-  };
-  onLabelClick = () => {
-    this.setState(({isDone}) => {
-      return { isDone: !isDone };
-    });
-  };
-  onMarkImportant = () => {
-    this.setState(({isImportant}) => {
-      return { isImportant: !isImportant };
-    });
-  };
   render() {
-    const { label, onDeleted } = this.props;
+    const {
+      label,
+      onDeleted,
+      onToggleImportant,
+      onToggleDone,
+      important,
+      done,
+    } = this.props;
     const style = {};
-    const { isDone, isImportant } = this.state;
 
-    if (isDone) {
+    if (done) {
       style.textDecoration = 'line-through';
       style.fontWeight = 100;
     }
-    if (isImportant) {
+    if (important) {
       style.color = '#FF5722';
       style.fontWeight = 'bold';
     }
+
     return (
-      <ListItem button onClick={this.onLabelClick}>
+      <ListItem button onClick={onToggleDone}>
         <ListItemText
           primary={
             <Typography variant="body1" style={style}>
@@ -45,7 +38,7 @@ export default class TodoListItem extends Component {
           }
         />
         <ListItemSecondaryAction>
-          <IconButton edge="end" onClick={this.onMarkImportant}>
+          <IconButton edge="end" onClick={onToggleImportant}>
             <PriorityHighIcon />
           </IconButton>
           <IconButton edge="end" aria-label="delete" onClick={onDeleted}>

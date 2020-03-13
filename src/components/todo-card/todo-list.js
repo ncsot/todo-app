@@ -12,18 +12,22 @@ const useStyles = (theme) => ({
   },
 });
 class TodoListClass extends Component {
-  
   render() {
     const { classes } = this.props;
-    const { todos, onDeleted } = this.props;
-    console.log("props= ", this.props)
+    const { todos, onDeleted, onToggleDone, onToggleImportant } = this.props;
+
     return (
       <List className={classes.root}>
         {todos.map((item) => {
           const { id, ...itemProps } = item;
           return (
             <React.Fragment key={id}>
-              <TodoListItem {...itemProps} onDeleted={() => onDeleted(id)} />
+              <TodoListItem
+                {...itemProps}
+                onDeleted={() => onDeleted(id)}
+                onToggleDone={() => onToggleDone(id)}
+                onToggleImportant={() => onToggleImportant(id)}
+              />
               <Divider light variant="middle" />
             </React.Fragment>
           );

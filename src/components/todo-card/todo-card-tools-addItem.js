@@ -3,37 +3,44 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import mainTheme from '../../theme/theme';
 import { withStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 const styles = (theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
   margin: {
     margin: theme.spacing(1),
+    marginBottom: '1rem',
   },
 });
 
-// const theme = createMuiTheme({
-//   palette: {
-//     primary: red,
-//   },
-// });
 const theme1 = createMuiTheme(mainTheme);
+
 class AddItem extends Component {
   render() {
-    console.log('PROPS= ', this.props);
-    console.log('theme = ', theme1);
-    const { classes } = this.props;
-    console.log('classec = ', classes);
+    const { classes, onAdded } = this.props;
+
     return (
       <form className={classes.root} noValidate>
         <ThemeProvider theme={theme1}>
           <TextField
             className={classes.margin}
-            label="ThemeProvider"
+            label="Add Item"
             variant="outlined"
-            id="mui-theme-provider-standard-input"
+            id="Add-item-input"
           />
+          <Fab
+            color="primary"
+            aria-label="add"
+            className={classes.margin}
+            onClick={() => onAdded('Hello Wolrd')}
+          >
+            <AddIcon />
+          </Fab>
         </ThemeProvider>
       </form>
     );

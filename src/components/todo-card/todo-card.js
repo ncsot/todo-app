@@ -30,8 +30,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TodoCard = ({ tododata, onDeleted, onAdded }) => {
-  console.log('tododata in card = ', tododata);
+const TodoCard = ({
+  tododata,
+  onDeleted,
+  onAdded,
+  onToggleDone,
+  onToggleImportant,
+}) => {
   const {
     name,
     data: [...todos],
@@ -55,9 +60,14 @@ const TodoCard = ({ tododata, onDeleted, onAdded }) => {
         />
         <ToolsSort />
         <CardContent>
-          <TodoList todos={todos} onDeleted={onDeleted}/>
+          <TodoList
+            todos={todos}
+            onDeleted={onDeleted}
+            onToggleDone={onToggleDone}
+            onToggleImportant={onToggleImportant}
+          />
         </CardContent>
-        <ToolsAddItem />
+        <ToolsAddItem onAdded={onAdded}/>
       </Card>
     </Grid>
   );
