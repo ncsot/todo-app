@@ -12,7 +12,7 @@ const theme1 = createMuiTheme(mainTheme);
 export default function SimpleBottomNavigation({ filter, onFilterChange }) {
   const [value, setValue] = React.useState(filter);
   const handleChange = (e, newValue) => {
-    onFilterChange(newValue)
+    onFilterChange(newValue);
     setValue(newValue);
   };
   return (

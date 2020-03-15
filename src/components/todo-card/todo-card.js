@@ -38,11 +38,11 @@ const TodoCard = ({
   onAdded,
   onToggleDone,
   onToggleImportant,
-  onFilterChange
+  onFilterChange,
 }) => {
   const classes = useStyles();
   const date = moment().format('MMMM Do YYYY');
-  
+
   return (
     <Grid container spacing={1} alignItems="flex-end" justify="center">
       <Card elevation={2} className={classes.root} variant="outlined">
@@ -57,7 +57,7 @@ const TodoCard = ({
           }
           subheader={date}
         />
-        <ToolsSort filter={filter} onFilterChange={onFilterChange}/>
+        <ToolsSort filter={filter} onFilterChange={onFilterChange} />
         <CardContent>
           <TodoList
             todos={todoData}
