@@ -6,16 +6,15 @@ import TodoCard from './todo-card/todo-card';
 export default class App extends Component {
   fakeid = 100;
   state = {
-    todoData: {
-      name: 'Current',
-      data: [
-        this.createTodoItem('Drink Coffee'),
-        this.createTodoItem('Build'),
-        this.createTodoItem('Repeat'),
-        this.createTodoItem('Drink juice'),
-      ],
-    },
+    todoData: [
+      this.createTodoItem('Drink Coffee'),
+      this.createTodoItem('Build'),
+      this.createTodoItem('Repeat'),
+      this.createTodoItem('Drink juice'),
+    ],
+    name: 'Current',
     term: '',
+    filter: 'all',
   };
 
   createTodoItem(label) {
@@ -29,17 +28,12 @@ export default class App extends Component {
 
   deleteItem = (id) => {
     this.setState(({ todoData }) => {
-      const idx = todoData.data.findIndex((el) => el.id === id);
+      const idx = todoData.findIndex((el) => el.id === id);
 
-      const newArray = [
-        ...todoData.data.slice(0, idx),
-        ...todoData.data.slice(idx + 1),
-      ];
+      const newArray = [...todoData.slice(0, idx), ...todoData.slice(idx + 1)];
 
       return {
-        todoData: {
-          data: newArray,
-        },
+        todoData: newArray,
       };
     });
   };
@@ -47,27 +41,25 @@ export default class App extends Component {
   addItem = (text) => {
     const newItem = this.createTodoItem(text);
     this.setState(({ todoData }) => {
-      const newArray = [...todoData.data, newItem];
+      const newArray = [...todoData, newItem];
 
       return {
-        todoData: {
-          data: newArray,
-        },
+        todoData: newArray,
       };
     });
   };
 
   toggleProperty(arr, id, propName) {
-    const idx = arr.data.findIndex((el) => el.id === id);
-    const prevItem = arr.data[idx];
+    const idx = arr.findIndex((el) => el.id === id);
+    const prevItem = arr[idx];
     const nextItem = { ...prevItem, [propName]: !prevItem[propName] };
-    return [...arr.data.slice(0, idx), nextItem, ...arr.data.slice(idx + 1)];
+    return [...arr.slice(0, idx), nextItem, ...arr.slice(idx + 1)];
   }
 
   onToggleDone = (id) => {
     this.setState(({ todoData }) => {
       return {
-        todoData: { data: this.toggleProperty(todoData, id, 'done') },
+        todoData: this.toggleProperty(todoData, id, 'done'),
       };
     });
   };
@@ -75,22 +67,57 @@ export default class App extends Component {
   onToggleImportant = (id) => {
     this.setState(({ todoData }) => {
       return {
-        todoData: { data: this.toggleProperty(todoData, id, 'important') },
+        todoData: this.toggleProperty(todoData, id, 'important'),
       };
     });
   };
 
+  searcItem(items, term) {
+    if (term.length === 0) {
+      return items;
+    }
+    return items.filter((item) => {
+      return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+    });
+  }
+
+  filterItem(items, filter) {
+    switch (filter) {
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((item) => !item.done);
+      case 'done':
+        return items.filter((item) => item.done);
+      default:
+        return items;
+    }
+  }
+
+  onSearchChange = (term) => {
+    this.setState({ term });
+  };
+  onFilterChange = (filter) => {
+    this.setState({ filter });
+  };
+
   render() {
+    const { todoData, name, term, filter } = this.state;
+    const visibleItems = this.filterItem(this.searcItem(todoData, term), filter);
+
     return (
       <div>
         <AppHeader />
-        <SearchBar />
+        <SearchBar onSearchChange={this.onSearchChange} />
         <TodoCard
-          tododata={this.state.todoData}
+          todoData={visibleItems}
+          nameCard={name}
+          filter={filter}
           onDeleted={this.deleteItem}
           onAdded={this.addItem}
           onToggleDone={this.onToggleDone}
           onToggleImportant={this.onToggleImportant}
+          onFilterChange={this.onFilterChange}
         />
       </div>
     );

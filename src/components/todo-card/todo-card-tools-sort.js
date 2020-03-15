@@ -9,21 +9,26 @@ import mainTheme from '../../theme/theme';
 
 const theme1 = createMuiTheme(mainTheme);
 
-export default function SimpleBottomNavigation() {
-  const [value, setValue] = React.useState(0);
-
+export default function SimpleBottomNavigation({ filter, onFilterChange }) {
+  const [value, setValue] = React.useState(filter);
+  const handleChange = (e, newValue) => {
+    onFilterChange(newValue);
+    setValue(newValue);
+  };
   return (
     <ThemeProvider theme={theme1}>
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        showLabels
-      >
-        <BottomNavigationAction label="all" icon={<AllInclusiveIcon />} />
-        <BottomNavigationAction label="active" icon={<DirectionsRunIcon />} />
-        <BottomNavigationAction label="done" icon={<DoneIcon />} />
+      <BottomNavigation value={value} onChange={handleChange} showLabels>
+        <BottomNavigationAction
+          label="all"
+          value="all"
+          icon={<AllInclusiveIcon />}
+        />
+        <BottomNavigationAction
+          label="active"
+          value="active"
+          icon={<DirectionsRunIcon />}
+        />
+        <BottomNavigationAction label="done" value="done" icon={<DoneIcon />} />
       </BottomNavigation>
     </ThemeProvider>
   );
