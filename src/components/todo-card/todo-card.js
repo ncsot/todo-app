@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
-    
   },
   divider: {
     backgroundColor: 'tomato',
@@ -32,26 +31,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TodoCard = ({
-  tododata,
+  todoData,
+  nameCard,
   onDeleted,
   onAdded,
   onToggleDone,
   onToggleImportant,
 }) => {
-  const {
-    name,
-    data: [...todos],
-  } = tododata;
-
   const classes = useStyles();
   const date = moment().format('MMMM Do YYYY');
+  
   return (
     <Grid container spacing={1} alignItems="flex-end" justify="center">
       <Card elevation={2} className={classes.root} variant="outlined">
         <CardHeader
           title={
             <Input
-              defaultValue={name}
+              defaultValue={nameCard}
               placeholder="Input name"
               inputProps={{ 'aria-label': 'description' }}
               className={classes.cardHeader}
@@ -62,13 +58,13 @@ const TodoCard = ({
         <ToolsSort />
         <CardContent>
           <TodoList
-            todos={todos}
+            todos={todoData}
             onDeleted={onDeleted}
             onToggleDone={onToggleDone}
             onToggleImportant={onToggleImportant}
           />
         </CardContent>
-        <ToolsAddItem onAdded={onAdded}/>
+        <ToolsAddItem onAdded={onAdded} />
       </Card>
     </Grid>
   );
