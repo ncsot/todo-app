@@ -73,23 +73,25 @@ export default class App extends Component {
 
   searcItem(items, term) {
     if (term.length === 0) {
-      
       return items;
     }
     return items.filter((item) => {
-      
-      return item.label.indexOf(term) > -1;
+      return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
     });
   }
+
+  onSearchChange = (term) => {
+    this.setState({ term });
+  };
 
   render() {
     const { todoData, name, term } = this.state;
     const visibleItems = this.searcItem(todoData, term);
-    
+
     return (
       <div>
         <AppHeader />
-        <SearchBar />
+        <SearchBar onSearchChange={this.onSearchChange} />
         <TodoCard
           todoData={visibleItems}
           nameCard={name}
