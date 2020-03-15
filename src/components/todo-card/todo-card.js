@@ -33,10 +33,12 @@ const useStyles = makeStyles((theme) => ({
 const TodoCard = ({
   todoData,
   nameCard,
+  filter,
   onDeleted,
   onAdded,
   onToggleDone,
   onToggleImportant,
+  onFilterChange
 }) => {
   const classes = useStyles();
   const date = moment().format('MMMM Do YYYY');
@@ -55,7 +57,7 @@ const TodoCard = ({
           }
           subheader={date}
         />
-        <ToolsSort />
+        <ToolsSort filter={filter} onFilterChange={onFilterChange}/>
         <CardContent>
           <TodoList
             todos={todoData}

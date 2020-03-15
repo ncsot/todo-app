@@ -14,6 +14,7 @@ export default class App extends Component {
     ],
     name: 'Current',
     term: '',
+    filter: 'all',
   };
 
   createTodoItem(label) {
@@ -80,13 +81,29 @@ export default class App extends Component {
     });
   }
 
+  filterItem(items, filter) {
+    switch (filter) {
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((item) => !item.done);
+      case 'done':
+        return items.filter((item) => item.done);
+      default:
+        return items;
+    }
+  }
+
   onSearchChange = (term) => {
     this.setState({ term });
   };
+  onFilterChange = (filter) => {
+    this.setState({ filter });
+  };
 
   render() {
-    const { todoData, name, term } = this.state;
-    const visibleItems = this.searcItem(todoData, term);
+    const { todoData, name, term, filter } = this.state;
+    const visibleItems = this.filterItem(this.searcItem(todoData, term), filter);
 
     return (
       <div>
@@ -95,10 +112,12 @@ export default class App extends Component {
         <TodoCard
           todoData={visibleItems}
           nameCard={name}
+          filter={filter}
           onDeleted={this.deleteItem}
           onAdded={this.addItem}
           onToggleDone={this.onToggleDone}
           onToggleImportant={this.onToggleImportant}
+          onFilterChange={this.onFilterChange}
         />
       </div>
     );
