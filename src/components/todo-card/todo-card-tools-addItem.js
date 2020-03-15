@@ -21,23 +21,43 @@ const styles = (theme) => ({
 const theme1 = createMuiTheme(mainTheme);
 
 class AddItem extends Component {
+  state = {
+    label: '',
+  };
+
+  onLabelChange = (e) => {
+    this.setState({
+      label: e.target.value,
+    });
+  };
+  onSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.label !== '') {
+      this.props.onAdded(this.state.label);
+      this.setState({
+        label: '',
+      });
+    }
+  };
   render() {
-    const { classes, onAdded } = this.props;
+    const { classes} = this.props;
 
     return (
-      <form className={classes.root} noValidate>
+      <form className={classes.root} noValidate onSubmit={this.onSubmit}>
         <ThemeProvider theme={theme1}>
           <TextField
             className={classes.margin}
             label="Add Item"
             variant="outlined"
             id="Add-item-input"
+            onChange={this.onLabelChange}
+            value={this.state.label}
           />
           <Fab
+            type="submit"
             color="primary"
             aria-label="add"
             className={classes.margin}
-            onClick={() => onAdded('Hello Wolrd')}
           >
             <AddIcon />
           </Fab>

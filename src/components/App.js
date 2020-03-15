@@ -4,8 +4,6 @@ import SearchBar from './search-bar';
 import TodoCard from './todo-card/todo-card';
 
 export default class App extends Component {
-  it = 1;
-
   fakeid = 100;
   state = {
     todoData: {
@@ -17,6 +15,7 @@ export default class App extends Component {
         this.createTodoItem('Drink juice'),
       ],
     },
+    term: '',
   };
 
   createTodoItem(label) {
@@ -26,8 +25,7 @@ export default class App extends Component {
       done: false,
       id: this.fakeid++,
     };
-  };
-  
+  }
 
   deleteItem = (id) => {
     this.setState(({ todoData }) => {
@@ -59,12 +57,27 @@ export default class App extends Component {
     });
   };
 
+  toggleProperty(arr, id, propName) {
+    const idx = arr.data.findIndex((el) => el.id === id);
+    const prevItem = arr.data[idx];
+    const nextItem = { ...prevItem, [propName]: !prevItem[propName] };
+    return [...arr.data.slice(0, idx), nextItem, ...arr.data.slice(idx + 1)];
+  }
+
   onToggleDone = (id) => {
-    console.log('Done = ', id);
+    this.setState(({ todoData }) => {
+      return {
+        todoData: { data: this.toggleProperty(todoData, id, 'done') },
+      };
+    });
   };
 
   onToggleImportant = (id) => {
-    console.log('Important = ', id);
+    this.setState(({ todoData }) => {
+      return {
+        todoData: { data: this.toggleProperty(todoData, id, 'important') },
+      };
+    });
   };
 
   render() {

@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
+    
   },
   divider: {
     backgroundColor: 'tomato',
@@ -46,7 +47,7 @@ const TodoCard = ({
   const date = moment().format('MMMM Do YYYY');
   return (
     <Grid container spacing={1} alignItems="flex-end" justify="center">
-      <Card className={classes.root} variant="outlined">
+      <Card elevation={2} className={classes.root} variant="outlined">
         <CardHeader
           title={
             <Input
