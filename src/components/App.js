@@ -71,14 +71,27 @@ export default class App extends Component {
     });
   };
 
+  searcItem(items, term) {
+    if (term.length === 0) {
+      
+      return items;
+    }
+    return items.filter((item) => {
+      
+      return item.label.indexOf(term) > -1;
+    });
+  }
+
   render() {
-    const { todoData, name } = this.state;
+    const { todoData, name, term } = this.state;
+    const visibleItems = this.searcItem(todoData, term);
+    
     return (
       <div>
         <AppHeader />
         <SearchBar />
         <TodoCard
-          todoData={todoData}
+          todoData={visibleItems}
           nameCard={name}
           onDeleted={this.deleteItem}
           onAdded={this.addItem}

@@ -15,7 +15,7 @@ class TodoListClass extends Component {
   render() {
     const { classes } = this.props;
     const { todos, onDeleted, onToggleDone, onToggleImportant } = this.props;
-    console.log('todos = ', todos)
+    
     return (
       <List className={classes.root}>
         {todos.map((item) => {
