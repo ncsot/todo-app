@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AppHeader from './header';
 import SearchBar from './search-bar';
-import TodoCard from './todo-card/todo-card';
+import TodoCard from './Todo-card/todo-card';
 
 export default class App extends Component {
   fakeid = 100;
